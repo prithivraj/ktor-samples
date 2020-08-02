@@ -145,7 +145,7 @@ fun Application.main() {
         get("/ip") {
             call.sendHttpBinResponse {
                 clear()
-                origin = call.request.origin.remoteHost
+                origin = "This is a test."
             }
         }
 
