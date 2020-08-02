@@ -24,10 +24,7 @@ import io.ktor.util.flattenEntries
 import io.ktor.util.getDigestFunction
 import io.ktor.util.toMap
 import kotlinx.coroutines.delay
-import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.transactions.transaction
 import java.io.File
-import java.sql.Connection
 import java.sql.DriverManager
 import java.time.ZoneId
 import java.time.ZonedDateTime
