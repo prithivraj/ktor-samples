@@ -1,24 +1,38 @@
 package io.ktor.samples.httpbin
 
-import com.google.gson.*
-import com.google.gson.reflect.*
-import kotlinx.coroutines.*
-import io.ktor.application.*
-import io.ktor.auth.*
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
+import io.ktor.application.Application
+import io.ktor.application.call
+import io.ktor.application.install
+import io.ktor.auth.UserHashedTableAuth
+import io.ktor.auth.authentication
+import io.ktor.auth.basic
 import io.ktor.content.TextContent
 import io.ktor.features.*
-import io.ktor.gson.*
-import io.ktor.html.*
+import io.ktor.gson.GsonConverter
+import io.ktor.html.respondHtml
 import io.ktor.http.*
 import io.ktor.http.content.*
-import io.ktor.request.*
+import io.ktor.request.header
+import io.ktor.request.receive
 import io.ktor.response.*
 import io.ktor.routing.*
-import io.ktor.util.*
-import java.io.*
-import java.time.*
+import io.ktor.util.error
+import io.ktor.util.flattenEntries
+import io.ktor.util.getDigestFunction
+import io.ktor.util.toMap
+import kotlinx.coroutines.delay
+import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.transactions.transaction
+import java.io.File
+import java.sql.Connection
+import java.sql.DriverManager
+import java.time.ZoneId
+import java.time.ZonedDateTime
 import java.util.*
-import java.util.concurrent.*
+
 
 /**
  * A Gson Builder with pretty printing enabled.
@@ -143,9 +157,23 @@ fun Application.main() {
         // you can also register the ForwardedHeaderSupport feature, and the `call.request.origin.remoteHost`
         // would return the user's IP, while `call.request.local.remoteHost` would return the IP of the reverse proxy.
         get("/ip") {
+            val url1 = "jdbc:postgresql://database-1.czarf1xovvr7.us-east-1.rds.amazonaws.com:5432/postgres"
+
+            val props = Properties()
+            props.setProperty("user", "postgres")
+            props.setProperty("password", "postgres")
+            props.setProperty("ssl", "true")
+            val conn = DriverManager.getConnection(url1, props)
+            val statement = conn.createStatement()
+            val resultSet = statement.executeQuery("select * from users")
+            var stringResponse = ""
+            while(resultSet.next()) {
+                stringResponse += resultSet.getString(1)
+            }
+
             call.sendHttpBinResponse {
                 clear()
-                origin = "This is a test."
+                origin = stringResponse
             }
         }
 
