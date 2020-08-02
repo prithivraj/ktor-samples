@@ -159,7 +159,7 @@ fun Application.main() {
             val props = Properties()
             props.setProperty("user", "postgres")
             props.setProperty("password", "postgres")
-            props.setProperty("ssl", "true")
+
             val conn = DriverManager.getConnection(url1, props)
             val statement = conn.createStatement()
             val resultSet = statement.executeQuery("select * from users")
