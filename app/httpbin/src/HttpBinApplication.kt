@@ -154,7 +154,7 @@ fun Application.main() {
         // you can also register the ForwardedHeaderSupport feature, and the `call.request.origin.remoteHost`
         // would return the user's IP, while `call.request.local.remoteHost` would return the IP of the reverse proxy.
         get("/ip") {
-            val url1 = "jdbc:postgresql://database-1.czarf1xovvr7.us-east-1.rds.amazonaws.com:5432/postgres"
+            val url1 = "jdbc:postgresql://database-2.czarf1xovvr7.us-east-1.rds.amazonaws.com:5432/postgres"
 
             val props = Properties()
             props.setProperty("user", "postgres")
