@@ -28,6 +28,7 @@ dependencies {
     compile "io.ktor:ktor-server-netty:$ktor_version"
     compile "io.ktor:ktor-websockets:$ktor_version"
     compile "ch.qos.logback:logback-classic:$logback_version"
+    compile group: 'postgresql', name: 'postgresql', version: '9.0-801.jdbc4'
     testCompile "io.ktor:ktor-server-test-host:$ktor_version"
 }
 
