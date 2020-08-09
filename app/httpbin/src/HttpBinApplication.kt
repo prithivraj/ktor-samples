@@ -172,6 +172,7 @@ fun Application.main() {
                 clear()
                 origin = stringResponse
             }
+            conn.close()
         }
 
         // @TODO: Forces a gzipped response?
